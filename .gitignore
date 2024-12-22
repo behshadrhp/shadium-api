@@ -1,0 +1,33 @@
+# migrations 
+*/migrations/*
+!*/migrations/__init__.py
+
+# PyCache
+*.pyc
+
+# database
+*.sqlite3
+
+# venv
+*env
+*Pipfile
+*Pipfile.lock
+
+# IDE
+*.vscode
+*.idea
+
+# uploads media
+media/*
+!media/default/
+
+# static files
+staticfiles/*
+
+# log
+tmp
+logs
+*.log
+
+# celery beat
+celerybeat-schedule.*

@@ -1,23 +1,54 @@
-"""
-URL configuration for core project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
+import os
 
 from django.contrib import admin
-from django.urls import path
+from django.conf import settings
+from django.views.static import serve
+from django.conf.urls.static import static
+from django.urls import re_path, path, include
+from django.views.generic.base import RedirectView
+from django.contrib.staticfiles.storage import staticfiles_storage
+
+import debug_toolbar
+from dotenv import load_dotenv
+
+from apps.account.api.v1.views.user_logout_view import LogoutView
+
+# Loading environment variable"s
+load_dotenv()
+
+# information panel
+admin.site.index_title = "Roino"
+admin.site.site_title = "Admin Panel"
+admin.site.site_header = "Roino Admin Panel"
+
+if settings.DEBUG: 
+    ADMIN_URL_PREFIX = os.environ.setdefault("ADMIN_URL_PREFIX", "real-admin")
+else:
+    ADMIN_URL_PREFIX = os.environ.get("ADMIN_URL_PREFIX")
+
+api_v1_urls = []
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    # Admin paths
+    path(f"{ADMIN_URL_PREFIX}/", admin.site.urls),
+    path(f"{ADMIN_URL_PREFIX}/logout/", LogoutView.as_view(), name="logout-admin"),
+    path("admin/", include("admin_honeypot.urls")),
+
+    # Favicon
+    path("favicon.ico", RedirectView.as_view(url=staticfiles_storage.url("img/favicon.ico"))),
+    
+    # API v1 paths
+    path("api/v1/", include((api_v1_urls, "api_v1"))),    
 ]
+
+# Static and Media
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+#  Media static
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+]
+
+# Debug Toolbar
+if settings.DEBUG:
+    urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns

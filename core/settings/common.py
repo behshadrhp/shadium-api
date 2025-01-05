@@ -123,19 +123,19 @@ SITE_ID = 1
 
 # REDIS CONFIGURATIONS
 # ------------------------------------------------------------------------------
-REDIS_HOST = os.environ.get('REDIS_HOST', '127.0.0.1')
-REDIS_PORT = os.environ.get('REDIS_PORT', '6379')
+REDIS_HOST = os.environ.get("REDIS_HOST", "127.0.0.1")
+REDIS_PORT = os.environ.get("REDIS_PORT", "6379")
 REDIS_URL_BROKER = os.environ.get("REDIS_DB", "0")
 REDIS_RESULT_BACKEND = os.environ.get("REDIS_DB", "1")
 
 # CACHES
 # ------------------------------------------------------------------------------
 CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_URL_BROKER}",
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": f"redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_URL_BROKER}",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
         },
     }
 }
@@ -243,11 +243,11 @@ AXES_LOCKOUT_TEMPLATE = "account/locked.html"
 
 # PROJECT ADMIN EMAIL
 # ------------------------------------------------------------------------------
-EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
-EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_PORT = os.getenv('EMAIL_PORT')
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_VERIFICATION_URL_TIMEOUT = 60 * 3  # seconds
 EMAIL_USE_SSL = True
 

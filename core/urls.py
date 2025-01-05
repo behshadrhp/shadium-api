@@ -12,6 +12,7 @@ import debug_toolbar
 from dotenv import load_dotenv
 
 from apps.account.api.v1.views.user_logout_view import LogoutView
+from utils.docs.api.yasg_doc import schema_view
 
 # Loading environment variable"s
 load_dotenv()
@@ -26,7 +27,11 @@ if settings.DEBUG:
 else:
     ADMIN_URL_PREFIX = os.environ.get("ADMIN_URL_PREFIX")
 
-api_v1_urls = []
+api_v1_urls = [
+    path("docs/swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
+    path("docs/swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
+    path("docs/redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+]
 
 urlpatterns = [
     # Admin paths
@@ -46,7 +51,7 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 #  Media static
 urlpatterns += [
-    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    re_path(r"^media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
 ]
 
 # Debug Toolbar

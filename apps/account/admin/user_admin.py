@@ -12,7 +12,7 @@ class UserAdmin(BaseUserAdmin):
     """ 
 
     fieldsets = (
-        (None, {"fields": ("username", "password")}),
+        (None, {"fields": ("email", "password")}),
         (
             _("Permissions"),
             {
@@ -32,14 +32,14 @@ class UserAdmin(BaseUserAdmin):
             None,
             {
                 "classes": ("wide",),
-                "fields": ("username", "password1", "password2"),
+                "fields": ("email", "password1", "password2"),
             },
         ),
     )
 
-    list_display = ["username", "first_name", "last_name", "is_active","is_staff", "is_superuser", "formatted_date_joined", "formatted_last_login"]
+    list_display = ["email", "first_name", "last_name", "is_active","is_staff", "is_superuser", "formatted_date_joined", "formatted_last_login"]
     list_filter = ["is_staff", "is_superuser", "is_active", "groups", "date_joined", "last_login"]
-    search_fields = ["username__icontains"]
+    search_fields = ["email__icontains"]
     ordering = ["-is_superuser", "-is_staff", "-last_login"]
     list_per_page = 10
     readonly_fields = ["last_login", "date_joined"]
@@ -54,7 +54,7 @@ class UserAdmin(BaseUserAdmin):
     
     def get_readonly_fields(self, request, obj=None):
         if obj: # if register new user
-            return self.readonly_fields + ["username"]
+            return self.readonly_fields + ["email"]
         return self.readonly_fields
 
     def has_add_permission(self, request) -> bool:
@@ -68,9 +68,9 @@ class UserAdmin(BaseUserAdmin):
         if request.user.is_superuser: # Checks User is Superuser access to change
              return True
         elif obj is not None and request.user.is_authenticated: # Checks whether the user is authenticated or not empty.
-            if obj.username == request.user.username:
+            if obj.email == request.user.email:
                 return True
-            elif obj.username is None and obj == request.user.username: # Checks if the user is the same person.
+            elif obj.email is None and obj == request.user.email: # Checks if the user is the same person.
                 return True
             else:
                 return False

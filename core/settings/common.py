@@ -32,6 +32,7 @@ THIRD_PARTY_APPS = [
     "import_export",
     "rest_framework",
     "django_filters",
+    "djcelery_email",
     "admin_honeypot",
     "multiselectfield",
     "django_extensions",
@@ -243,13 +244,14 @@ AXES_LOCKOUT_TEMPLATE = "account/locked.html"
 
 # PROJECT ADMIN EMAIL
 # ------------------------------------------------------------------------------
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_PORT = os.getenv("EMAIL_PORT")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_VERIFICATION_URL_TIMEOUT = 60 * 3  # seconds
 EMAIL_USE_SSL = True
+SITE_NAME = "shaduim"
 
 # MESSAGE TAGS
 # ------------------------------------------------------------------------------

@@ -22,7 +22,7 @@ class CustomUserManager(BaseUserManager):
         else:
             raise ValueError(_("Users must have a email address."))
         
-        user = self.model(first_name=first_name, last_name=last_name, email=email, **extra_fields)
+        user = self.model(first_name=first_name, last_name=last_name, email=email.lower(), **extra_fields)
         user.set_password(password)
 
         extra_fields.setdefault("is_active", True)

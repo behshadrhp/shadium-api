@@ -17,8 +17,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
     # initial info
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
     email = models.EmailField(db_index=True, unique=True)
 
     # permissions
@@ -30,8 +28,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name", "last_name"]
-
+    
     objects = CustomUserManager()
 
     class Meta:
@@ -40,8 +37,4 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-    
-    @property
-    def get_full_name(self):
-        return f"{self.first_name.title()} {self.last_name.title()}"
     

@@ -19,6 +19,8 @@ class Profile(TimeStamped):
 
     # initial information
     avatar = models.ImageField(verbose_name=_("Avatar"), default="default/avatar.png", upload_to="profile/avatar/")
+    first_name = models.CharField(max_length=50, null=True, blank=True)
+    last_name = models.CharField(max_length=50, null=True, blank=True)
     phone_number = PhoneNumberField(verbose_name=_("Phone Number"), max_length=30, null=True, blank=True)
     biography = models.TextField(verbose_name=_("Biography"), null=True, blank=True)
     gender = models.CharField(verbose_name=_("Gender"), choices=GenderType.choices, max_length=10, null=True, blank=True)

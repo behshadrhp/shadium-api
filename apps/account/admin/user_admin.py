@@ -14,11 +14,11 @@ class UserAdmin(BaseUserAdmin):
     The UserAdmin class is for creating and displaying users and can be managed from this section.
     """
     
-    list_display = ["pkid", "email", "first_name", "last_name", "is_active", "is_staff", "is_superuser", "date_joined"]
+    list_display = ["pkid", "email", "is_active", "is_staff", "is_superuser", "date_joined"]
     list_filter = ["is_active", "is_staff", "is_superuser", "date_joined"]
-    list_display_links = ["pkid", "email", "first_name", "last_name"]
+    list_display_links = ["pkid", "email"]
 
-    search_fields = ["email__icontains", "first_name__icontains", "last_name__icontains"]
+    search_fields = ["email__icontains"]
     ordering = ["is_superuser", "is_staff", "-date_joined"]
     readonly_fields = ["last_login", "date_joined"]
     list_per_page = 10
@@ -29,7 +29,6 @@ class UserAdmin(BaseUserAdmin):
 
     fieldsets = (
         (_("Login Credentials"), {"fields": ("email", "password")}),
-        (_("Personal Info"), {"fields": ("first_name", "last_name")}),
         (_("Permissions and Groups"), {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")}),
         (_("Important Date"), {"fields": ("last_login", "date_joined")}),
     )
@@ -39,7 +38,7 @@ class UserAdmin(BaseUserAdmin):
             None,
             {
                 "classes": ("wide",),
-                "fields": ("email", "first_name", "last_name", "password1", "password2"),
+                "fields": ("email", "password1", "password2"),
             },
         ),
     )

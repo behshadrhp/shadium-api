@@ -39,6 +39,12 @@ THIRD_PARTY_APPS = [
     "phonenumber_field",
     "django_celery_beat",
     "rest_framework_simplejwt",
+    "rest_framework.authtoken",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
 ]
 
 LOCAL_APPS = [
@@ -61,6 +67,7 @@ BASE_MIDDLEWARE = [
     "axes.middleware.AxesMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
     "django_session_timeout.middleware.SessionTimeoutMiddleware",
 ]
 
@@ -119,7 +126,7 @@ PASSWORD_HASHERS = [
 
 # ACCOUNT CONFIGURATIONS
 # ------------------------------------------------------------------------------
-AUTH_USER_MODEL = "account.User"
+AUTH_USER_MODEL = "custom_account.User"
 SITE_ID = 1
 
 # REDIS CONFIGURATIONS
@@ -161,12 +168,25 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
 AUTHENTICATION_BACKENDS = [
+    # Authentication With JWT
+    "allauth.account.auth_backends.AuthenticationBackend",
+
     # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
     "axes.backends.AxesStandaloneBackend",
 
     # Django ModelBackend is the default authentication backend.
     "django.contrib.auth.backends.ModelBackend",
 ]
+
+# AUTHENTICATION CONFIGURATION
+# ------------------------------------------------------------------------------
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_CONFIRM_EMAIL_NO_GET = True
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USERNAME_REQUIRED = False
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -197,8 +217,11 @@ DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         # Enable Authentication by JWT
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
     ),
+    "DEFAULT_PERMISSION_CLASSES": {
+        "rest_framework.permission.IsAuthenticated"
+    },
     "DEFAULT_THROTTLE_RATES": {
         "anon": "5/day",
         "user": "5/day"
@@ -213,8 +236,10 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
     # token expiry date --> for example after 2 hour
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=2),
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=7),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "ROTATE_REFRESH_TOKENS": True,
+    "SIGNING_KEY": os.environ.get("SIGNING_KEY"),
     "ALGORITHM": "HS512", # TODO Use Asymmetric key
     "VERIFYING_KEY": None,
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
@@ -224,6 +249,15 @@ SIMPLE_JWT = {
         "rest_framework_simplejwt.tokens.AccessToken",
     ),
     "TOKEN_TYPE_CLAIM": "token_type",
+}
+
+# REST_AUTH CONFIGURATIONS
+# ------------------------------------------------------------------------------
+REST_AUTH = {
+    "USE_JWT": True,
+    "JWT_AUTH_TOKEN": "authors-access-token",
+    "JWT_AUTH_REFRESH_COOKIE": "authors-refresh-token",
+    "REGISTER_SERIALIZER": "apps.account.api.v1.serializers.user_serializer.UserSerializer",
 }
 
 # CSV EXPORT CONFIGURATIONS

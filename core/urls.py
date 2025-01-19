@@ -8,11 +8,14 @@ from django.urls import re_path, path, include
 from django.views.generic.base import RedirectView
 from django.contrib.staticfiles.storage import staticfiles_storage
 
+from dj_rest_auth.views import PasswordResetConfirmView
+
 import debug_toolbar
 from dotenv import load_dotenv
 
 from apps.account.api.v1.views.user_logout_view import LogoutView
 from utils.docs.api.yasg_doc import schema_view
+
 
 # Loading environment variable"s
 load_dotenv()
@@ -28,9 +31,10 @@ else:
     ADMIN_URL_PREFIX = os.environ.get("ADMIN_URL_PREFIX")
 
 api_v1_urls = [
-    path("docs/swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
-    path("docs/swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
-    path("docs/redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+    # docs
+    path("docs/schema/swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
+    path("docs/schema/swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
+    path("docs/schema/redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]
 
 urlpatterns = [
@@ -43,7 +47,12 @@ urlpatterns = [
     path("favicon.ico", RedirectView.as_view(url=staticfiles_storage.url("img/favicon.ico"))),
     
     # API v1 paths
-    path("api/v1/", include((api_v1_urls, "api_v1"))),    
+    path("api/v1/", include((api_v1_urls, "api_v1"))),  
+
+    # authentication path
+    path("api/v1/account/auth/", include("dj_rest_auth.urls")),
+    path("api/v1/account/auth/register/", include("dj_rest_auth.registration.urls")),
+    path("api/v1/account/auth/password-rest/<uidb64>/<token>/", PasswordResetConfirmView.as_view(), name="password-rest"),  
 ]
 
 # Static and Media

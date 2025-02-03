@@ -12,6 +12,7 @@ import debug_toolbar
 from dotenv import load_dotenv
 
 from apps.account.api.v1.views.user_logout_view import LogoutView
+
 from utils.docs.api.yasg_doc import schema_view
 
 
@@ -30,9 +31,12 @@ else:
 
 api_v1_urls = [
     # docs
-    path("docs/schema/swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
-    path("docs/schema/swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
     path("docs/schema/redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+    path("docs/schema/swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
+    path("docs/schema/swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger"),
+
+    # authentication
+    path("account/auth/token/", include("apps.account.api.v1.urls")),
 ]
 
 urlpatterns = [
@@ -45,8 +49,7 @@ urlpatterns = [
     path("favicon.ico", RedirectView.as_view(url=staticfiles_storage.url("img/favicon.ico"))),
     
     # API v1 paths
-    path("api/v1/", include((api_v1_urls, "api_v1"))),  
-
+    path("api/v1/", include((api_v1_urls, "api_v1"))),
 ]
 
 # Static and Media

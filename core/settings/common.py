@@ -239,15 +239,6 @@ SIMPLE_JWT = {
     "TOKEN_TYPE_CLAIM": "token_type",
 }
 
-# REST_AUTH CONFIGURATIONS
-# ------------------------------------------------------------------------------
-REST_AUTH = {
-    "USE_JWT": True,
-    "JWT_AUTH_TOKEN": "authors-access-token",
-    "JWT_AUTH_REFRESH_COOKIE": "authors-refresh-token",
-    "REGISTER_SERIALIZER": "apps.account.api.v1.serializers.user_serializer.UserSerializer",
-}
-
 # CSV EXPORT CONFIGURATIONS
 # ------------------------------------------------------------------------------
 CSV_EXPORT_SETTINGS = {

@@ -285,7 +285,7 @@ EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_VERIFICATION_URL_TIMEOUT = 60 * 3  # seconds
 EMAIL_USE_SSL = True
-SITE_NAME = "shaduim"
+SITE_NAME = "medium-api"
 
 # MESSAGE TAGS
 # ------------------------------------------------------------------------------

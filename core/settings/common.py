@@ -39,12 +39,6 @@ THIRD_PARTY_APPS = [
     "phonenumber_field",
     "django_celery_beat",
     "rest_framework_simplejwt",
-    "rest_framework.authtoken",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "dj_rest_auth",
-    "dj_rest_auth.registration",
 ]
 
 LOCAL_APPS = [
@@ -67,7 +61,6 @@ BASE_MIDDLEWARE = [
     "axes.middleware.AxesMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    "allauth.account.middleware.AccountMiddleware",
     "django_session_timeout.middleware.SessionTimeoutMiddleware",
 ]
 
@@ -126,7 +119,7 @@ PASSWORD_HASHERS = [
 
 # ACCOUNT CONFIGURATIONS
 # ------------------------------------------------------------------------------
-AUTH_USER_MODEL = "custom_account.User"
+AUTH_USER_MODEL = "account.User"
 SITE_ID = 1
 
 # REDIS CONFIGURATIONS
@@ -168,9 +161,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # AUTHENTICATION
 # ------------------------------------------------------------------------------
 AUTHENTICATION_BACKENDS = [
-    # Authentication With JWT
-    "allauth.account.auth_backends.AuthenticationBackend",
-
     # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
     "axes.backends.AxesStandaloneBackend",
 
@@ -217,7 +207,7 @@ DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         # Enable Authentication by JWT
-        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+
     ),
     "DEFAULT_PERMISSION_CLASSES": {
         "rest_framework.permission.IsAuthenticated"

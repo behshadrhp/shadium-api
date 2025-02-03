@@ -8,8 +8,6 @@ from django.urls import re_path, path, include
 from django.views.generic.base import RedirectView
 from django.contrib.staticfiles.storage import staticfiles_storage
 
-from dj_rest_auth.views import PasswordResetConfirmView
-
 import debug_toolbar
 from dotenv import load_dotenv
 
@@ -49,10 +47,6 @@ urlpatterns = [
     # API v1 paths
     path("api/v1/", include((api_v1_urls, "api_v1"))),  
 
-    # authentication path
-    path("api/v1/account/auth/", include("dj_rest_auth.urls")),
-    path("api/v1/account/auth/register/", include("dj_rest_auth.registration.urls")),
-    path("api/v1/account/auth/password-rest/<uidb64>/<token>/", PasswordResetConfirmView.as_view(), name="password-rest"),  
 ]
 
 # Static and Media

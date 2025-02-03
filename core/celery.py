@@ -19,7 +19,7 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 # Celery Configuration
 app.conf.broker_url = f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}/{settings.REDIS_URL_BROKER}"
-app.conf.result_backend = f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}/{settings.REDIS_RESULT_BACKEND}"
+app.conf.result_backend = f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}/{settings.REDIS_URL_BROKER}"
 
 # Serialization settings
 app.conf.task_serializer = "json"

@@ -1,6 +1,6 @@
 import os
-from datetime import timedelta
 from pathlib import Path
+from datetime import timedelta
 
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
@@ -9,7 +9,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # APPS
 # ------------------------------------------------------------------------------
-
 DJANGO_APPS = [
     "jazzmin",
     # Admin Panel
@@ -127,7 +126,6 @@ SITE_ID = 1
 REDIS_HOST = os.environ.get("REDIS_HOST", "127.0.0.1")
 REDIS_PORT = os.environ.get("REDIS_PORT", "6379")
 REDIS_URL_BROKER = os.environ.get("REDIS_DB", "0")
-REDIS_RESULT_BACKEND = os.environ.get("REDIS_DB", "1")
 
 # CACHES
 # ------------------------------------------------------------------------------

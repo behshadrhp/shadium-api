@@ -18,7 +18,7 @@ class ProfileAdmin(admin.ModelAdmin):
     list_per_page = 10
 
     fieldsets = (
-        (_("relationships"), {"fields": ("user", "followers")}),
+        (_("relationships"), {"fields": ("user", "following")}),
         (_("initial information"), {"fields": ("avatar", "first_name", "last_name", "phone_number", "biography", "gender", "country", "city", "twitter")}),
     )
 

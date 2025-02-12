@@ -15,7 +15,7 @@ class Profile(TimeStamped):
 
     # relationships
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_profile")
-    followers = models.ManyToManyField("self", symmetrical=False, related_name="user_followers", blank=True)
+    following = models.ManyToManyField("self", symmetrical=False, related_name="user_following", blank=True)
 
     # initial information
     avatar = models.ImageField(verbose_name=_("Avatar"), default="default/avatar.png", upload_to="profile/avatar/")
@@ -32,10 +32,10 @@ class Profile(TimeStamped):
         return f"{self.user.email}"
     
     def follow(self, profile):
-        self.followers.add(profile)
+        self.following.add(profile)
 
     def unfollow(self, profile):
-        self.followers.remove(profile)
+        self.following.remove(profile)
 
     def check_following(self, profile):
-        return self.followers.filter(pkid=profile.pkid).exists()
+        return self.following.filter(pkid=profile.pkid).exists()

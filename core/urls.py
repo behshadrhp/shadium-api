@@ -8,10 +8,13 @@ from django.urls import re_path, path, include
 from django.views.generic.base import RedirectView
 from django.contrib.staticfiles.storage import staticfiles_storage
 
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 import debug_toolbar
 from dotenv import load_dotenv
 
 from apps.account.api.v1.views.user_logout_view import LogoutView
+from apps.account.api.v1.views.user_register_view import RegisterUserView
 
 from utils.docs.api.yasg_doc import schema_view
 
@@ -36,7 +39,12 @@ api_v1_urls = [
     path("docs/schema/swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger"),
 
     # authentication
-    path("account/auth/token/", include("apps.account.api.v1.urls")),
+    path("account/auth/token/login/", TokenObtainPairView.as_view(), name="login"),
+    path("account/auth/token/register/", RegisterUserView.as_view(), name="register"),
+    path("account/auth/token/refresh/", TokenRefreshView.as_view(), name="refresh-token"),
+
+    # account app
+    path("account/", include("apps.account.api.v1.urls")),
 ]
 
 urlpatterns = [

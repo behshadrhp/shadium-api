@@ -25,7 +25,7 @@ drf-yasg==1.21.8
 django-markdownx==4.0.7
 nanoid==2.0.0
 phonenumbers==8.13.44
-pillow==11.0.0
+pillow==11.1.0
 pip-chill==1.0.3
 flower==2.0.1
 python-dotenv==1.0.1

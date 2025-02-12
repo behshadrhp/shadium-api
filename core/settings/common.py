@@ -166,16 +166,6 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
 
-# AUTHENTICATION CONFIGURATION
-# ------------------------------------------------------------------------------
-ACCOUNT_AUTHENTICATION_METHOD = "email"
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_CONFIRM_EMAIL_NO_GET = True
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_USERNAME_REQUIRED = False
-
 # GENERAL
 # ------------------------------------------------------------------------------
 LANGUAGE_CODE = "en-us"
@@ -264,7 +254,7 @@ EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_VERIFICATION_URL_TIMEOUT = 60 * 3  # seconds
 EMAIL_USE_SSL = True
-SITE_NAME = "medium-api"
+SITE_NAME = "shadium-api"
 
 # MESSAGE TAGS
 # ------------------------------------------------------------------------------

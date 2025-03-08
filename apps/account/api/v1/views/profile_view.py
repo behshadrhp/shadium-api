@@ -1,5 +1,8 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
+
+from rest_framework import filters
 
 from apps.account.models.profile_model import Profile
 from apps.account.api.v1.serializers.profile_serializer import AllProfileSerializer
@@ -27,6 +30,13 @@ class AllProfileViewSet(ModelViewSet):
     serializer_class = AllProfileSerializer
     permission_classes = [IsAuthenticated]
     http_method_names = ["get"]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ["gender", "country"]
+    search_fields = [
+        "user__email__icontains", "first_name__icontains", "last_name__icontains", 
+        "biography__icontains", "city__icontains"
+    ]
+
     lookup_field = "id"
 
     def get_queryset(self):

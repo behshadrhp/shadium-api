@@ -10,7 +10,7 @@ class FollowingSerializer(serializers.ModelSerializer):
     class Meta:
 
         model = Profile
-        fields = ["user", "avatar", "first_name", "last_name"]
+        fields = ["user", "avatar", "first_name", "last_name", "biography"]
 
     def get_user(self, obj):
         return obj.user.email

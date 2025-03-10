@@ -6,7 +6,7 @@ from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
 from utils.type.account.gender_type import GenderType
-from apps.account.models.base_model import BaseModel
+from core.models.base_model import BaseModel
 
 
 User = get_user_model()

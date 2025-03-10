@@ -45,6 +45,9 @@ api_v1_urls = [
 
     # account app
     path("account/", include("apps.account.api.v1.urls")),
+
+    # blog app
+    path("blog/", include("apps.blog.api.v1.urls")),
 ]
 
 urlpatterns = [

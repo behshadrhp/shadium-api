@@ -6,12 +6,12 @@ from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
 from utils.type.account.gender_type import GenderType
-from apps.account.models.time_stamped_model import TimeStamped
+from apps.account.models.base_model import BaseModel
 
 
 User = get_user_model()
 
-class Profile(TimeStamped):
+class Profile(BaseModel):
 
     # relationships
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_profile")

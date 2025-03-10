@@ -12,9 +12,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     This class is for Set User model.
     """
     
-    # id model
-    pkid = models.BigAutoField(primary_key=True, editable=False, unique=True)
-    id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    # primary id model
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 
     # initial info
     email = models.EmailField(db_index=True, unique=True)

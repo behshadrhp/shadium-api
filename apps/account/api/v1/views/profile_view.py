@@ -5,7 +5,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
 from apps.account.models.profile_model import Profile
-from apps.account.api.v1.serializers.profile_serializer import AllProfileSerializer
+from apps.account.api.v1.serializers.profile_serializer import ExploreSerializer
 from apps.account.api.v1.serializers.profile_serializer import GetProfileSerializer, PutProfileSerializer
 
 class ProfileViewSet(ModelViewSet):
@@ -25,9 +25,9 @@ class ProfileViewSet(ModelViewSet):
         return PutProfileSerializer
 
 
-class AllProfileViewSet(ModelViewSet):
+class ExploreViewSet(ModelViewSet):
 
-    serializer_class = AllProfileSerializer
+    serializer_class = ExploreSerializer
     permission_classes = [IsAuthenticated]
     http_method_names = ["get"]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]

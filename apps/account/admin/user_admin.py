@@ -14,9 +14,9 @@ class UserAdmin(BaseUserAdmin):
     The UserAdmin class is for creating and displaying users and can be managed from this section.
     """
     
-    list_display = ["pkid", "email", "is_active", "is_staff", "is_superuser", "date_joined"]
+    list_display = ["email", "is_active", "is_staff", "is_superuser", "date_joined"]
     list_filter = ["is_active", "is_staff", "is_superuser", "date_joined"]
-    list_display_links = ["pkid", "email"]
+    list_display_links = ["email"]
 
     search_fields = ["email__icontains"]
     ordering = ["is_superuser", "is_staff", "-date_joined"]

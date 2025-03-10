@@ -38,4 +38,13 @@ class Profile(BaseModel):
         self.following.remove(profile)
 
     def check_following(self, profile):
-        return self.following.filter(pkid=profile.pkid).exists()
+        return self.following.select_related("user").prefetch_related("following").filter(id=profile.id).exists()
+
+    @property
+    def following_count(self):
+        return self.follow.count()
+    
+    @property
+    def followers_count(self):
+        return self.user_following.count()
+    

@@ -59,6 +59,9 @@ urlpatterns = [
     # Favicon
     path("favicon.ico", RedirectView.as_view(url=staticfiles_storage.url("img/favicon.ico"))),
     
+    # Markdown Editor
+    path("markdownx/", include("markdownx.urls")),
+    
     # API v1 paths
     path("api/v1/", include((api_v1_urls, "api_v1"))),
 ]

@@ -21,7 +21,7 @@ class Post(BaseModel):
     # information about post 
     cover = models.ImageField(upload_to="post/cover/", default="default/no-image.jpg")
     title = models.CharField(max_length=255, unique=True)
-    slug = AutoSlugField(populate_from=title, always_update=True, unique=True)
+    slug = AutoSlugField(populate_from="title", always_update=True, unique=True)
     body = MarkdownxField()
 
     # post status -> is publish or draft
@@ -68,4 +68,3 @@ class PostView(BaseModel):
     def record_view(cls, post, user, visitor_ip):
         post_view, _ = cls.objects.get_or_create(post=post, user=user, visitor_ip=visitor_ip)
         post_view.save()
-    

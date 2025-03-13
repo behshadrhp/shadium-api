@@ -66,7 +66,7 @@ class PutProfileSerializer(serializers.ModelSerializer):
         return obj.country.name
 
 
-class ExploreSerializer(serializers.ModelSerializer):
+class UserExploreSerializer(serializers.ModelSerializer):
 
     user = serializers.SerializerMethodField()
     country = serializers.SerializerMethodField()

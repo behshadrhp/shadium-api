@@ -2,10 +2,11 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 from autoslug import AutoSlugField
-from markdownx.models import MarkdownxField
+from tinymce.models import HTMLField
 from taggit.managers import TaggableManager
 
 from core.models.base_model import BaseModel
+
 from utils.type.blog.post_status_type import PostStatus
 from utils.tools.blog.read_time_engine import PostReadTimeEngine
 
@@ -22,7 +23,7 @@ class Post(BaseModel):
     cover = models.ImageField(upload_to="post/cover/", default="default/no-image.jpg")
     title = models.CharField(max_length=255, unique=True)
     slug = AutoSlugField(populate_from="title", always_update=True, unique=True)
-    body = MarkdownxField()
+    body = HTMLField()
 
     # post status -> is publish or draft
     status = models.CharField(max_length=2, choices=PostStatus.choices, default=PostStatus.PB)

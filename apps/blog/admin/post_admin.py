@@ -1,14 +1,13 @@
 from django.contrib import admin
 
 from csvexport.actions import csvexport
-from markdownx.admin import MarkdownxModelAdmin
 from import_export.admin import ExportActionMixin 
 
 from apps.blog.models.post_model import Post, PostView
 
 
 @admin.register(Post)
-class PostAdmin(MarkdownxModelAdmin, ExportActionMixin, admin.ModelAdmin):
+class PostAdmin(ExportActionMixin, admin.ModelAdmin):
     """
     Monitoring Post on blog.
     """
@@ -43,7 +42,7 @@ class PostAdmin(MarkdownxModelAdmin, ExportActionMixin, admin.ModelAdmin):
 
 
 @admin.register(PostView)
-class PostViewAdmin(MarkdownxModelAdmin, ExportActionMixin, admin.ModelAdmin):
+class PostViewAdmin(ExportActionMixin, admin.ModelAdmin):
     """
     Monitoring All Post View on blog.
     """

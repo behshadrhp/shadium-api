@@ -23,10 +23,10 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "axes",
     "taggit",
+    "tinymce",
     "storages",
     "drf_yasg",
     "csvexport",
-    "markdownx",
     "corsheaders",
     "import_export",
     "rest_framework",

@@ -25,7 +25,7 @@ class RegisterUserView(APIView):
                 return Response(
                     {
                         "error": False,
-                        "message": "Register is Successful.",
+                        "detail": "Register is Successful.",
                         "code": 1001,
                         "refresh": str(refresh),
                         "access": str(refresh.access_token),
@@ -36,7 +36,7 @@ class RegisterUserView(APIView):
             raise ValidationError(
                 {
                     "error": True,
-                    "message": "Check your fields and try again.",
+                    "detail": "Check your fields and try again.",
                     "code": 2001
                 }
             )
@@ -45,7 +45,7 @@ class RegisterUserView(APIView):
             raise ValidationError(
                 {
                     "error": True,
-                    "message": "Registration failed. Please try again later.",
+                    "detail": "Registration failed. Please try again later.",
                     "code": 2002,
                 }
             )

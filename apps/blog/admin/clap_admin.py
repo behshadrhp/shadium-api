@@ -3,14 +3,13 @@ from django.contrib import admin
 from csvexport.actions import csvexport
 from import_export.admin import ExportActionMixin 
 
-from apps.blog.models.bookmark_model import BookMark
+from apps.blog.models.post_model import Clap
 
 
-@admin.register(BookMark)
-class BookMarkAdmin(ExportActionMixin, admin.ModelAdmin):
+@admin.register(Clap)
+class ClapAdmin(ExportActionMixin, admin.ModelAdmin):
     """
-    Monitoring All user BookMark.
-    save posts.
+    Monitoring All Clap User activity.
     """
     
     list_display = ["user", "post", "is_deleted", "created_at", "updated_at"]

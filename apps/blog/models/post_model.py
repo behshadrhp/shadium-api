@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth import get_user_model
 
 from autoslug import AutoSlugField
@@ -13,10 +14,40 @@ from utils.tools.blog.read_time_engine import PostReadTimeEngine
 
 User = get_user_model()
 
+
+class Clap(BaseModel):
+
+    # user and post relations
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_clap")
+    post = models.ForeignKey("Post", on_delete=models.CASCADE, related_name="post_clap")
+
+    # settings
+    is_deleted = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "Clap"
+        verbose_name_plural = "Claps"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "post"],
+                condition=Q(is_deleted=False),
+                name="unique_active_clap"
+            ),
+        ]
+        indexes = [
+            models.Index(fields=["user", "post",]),
+        ]
+
+    def __str__(self):
+        return f"{self.user.email} clapped {self.post.title}"
+    
+
 class Post(BaseModel):
 
-    # user and tag relations
+    # user and tags and claps relations
     tags = TaggableManager(blank=True)
+    claps = models.ManyToManyField(User, through=Clap, related_name="clapped_post")
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="author_blog_post")
 
     # information about post 

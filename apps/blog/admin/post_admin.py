@@ -3,7 +3,14 @@ from django.contrib import admin
 from csvexport.actions import csvexport
 from import_export.admin import ExportActionMixin 
 
-from apps.blog.models.post_model import Post, PostView
+from apps.blog.models.post_model import Post, PostView, Clap
+
+
+class ClapInline(admin.TabularInline):
+    model = Clap
+    extra = 0
+    readonly_fields = ["user"]
+    can_delete = False
 
 
 @admin.register(Post)
@@ -21,6 +28,7 @@ class PostAdmin(ExportActionMixin, admin.ModelAdmin):
     ordering = ["created_at", "updated_at", "status"]
 
     actions = [csvexport]
+    inlines = [ClapInline]
     
     def has_add_permission(self, request) -> bool:
         return request.user.is_staff

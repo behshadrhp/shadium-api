@@ -30,3 +30,14 @@ class CommentViewSet(ModelViewSet):
     def perform_create(self, serializer):
         user = self.request.user
         return serializer.save(user=user)
+
+
+class CommentExploreViewSet(ModelViewSet):
+
+    queryset = Comment.objects.select_related("user", "post", "replay").all().filter(is_deleted=False)
+    serializer_class = GetCommentSerializer
+    http_method_names = ["get"]
+    permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ["post__title__icontains"]
+    lookup_field = "id"

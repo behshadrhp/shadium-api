@@ -5,6 +5,17 @@ from apps.blog.models.comment_model import Comment
 from apps.blog.api.v1.serializers.post_serializer import PostSerializer
 
 
+class CommentSerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Comment
+        fields = ["id", "user", "replay", "message", "is_deleted", "created_at", "updated_at"]
+
+    def get_user(self, comment: Comment):
+        return comment.user.email
+
+
 class GetCommentSerializer(serializers.ModelSerializer):
 
     user = serializers.SerializerMethodField()

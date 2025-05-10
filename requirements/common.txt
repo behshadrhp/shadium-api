@@ -41,3 +41,7 @@ django-autoslug==1.9.9
 bs4==0.0.2
 django-tinymce==4.1.0
 Markdown==3.8
+elasticsearch==8.11.0
+elasticsearch-dsl==8.11.0
+django-elasticsearch-dsl==8.0
+django-elasticsearch-dsl-drf==0.22.5

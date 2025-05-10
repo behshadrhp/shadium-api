@@ -38,6 +38,8 @@ THIRD_PARTY_APPS = [
     "phonenumber_field",
     "django_celery_beat",
     "rest_framework_simplejwt",
+    "django_elasticsearch_dsl",
+    "django_elasticsearch_dsl_drf",
 ]
 
 LOCAL_APPS = [
@@ -128,6 +130,15 @@ SITE_ID = 1
 REDIS_HOST = os.environ.get("REDIS_HOST", "127.0.0.1")
 REDIS_PORT = os.environ.get("REDIS_PORT", "6379")
 REDIS_URL_BROKER = os.environ.get("REDIS_DB", "0")
+
+
+# ELASTICSEARCH
+# ------------------------------------------------------------------------------
+ELASTICSEARCH_DSL = {
+    "default": {
+        "hosts": "http://localhost:9200",
+    }
+}
 
 # CACHES
 # ------------------------------------------------------------------------------
